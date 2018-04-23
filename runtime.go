@@ -1,5 +1,11 @@
 package dotnet
 
+/* NOTE on Windows: dlfcn-win32/ -ldl
+We use dlfcn-win32 project in #${SRCDIR}/dlfcn-win32 precompiled
+For changes you need to re-clone,  ./configure, and build
+with mingw32-make
+*/
+
 /*
 #cgo CXXFLAGS: -std=c++11 -Wall -pedantic
 #cgo linux LDFLAGS: -ldl
