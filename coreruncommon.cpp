@@ -10,7 +10,13 @@
 #include <cstring>
 #include <assert.h>
 #include <dirent.h>
-#include <dlfcn.h>
+#ifdef __WIN32
+  #include <dlfcn-win32\dlfcn.h>
+  char *realpath(const char *, char*);
+#else
+  #include <dlfcn.h>
+#endif
+
 #include <limits.h>
 #include <set>
 #include <string>
@@ -190,7 +196,6 @@ void AddFilesFromDirectoryToTpaList(const char* directory, std::string& tpaList)
                 ".ni.exe",
                 ".exe",
                 };
-
     DIR* dir = opendir(directory);
     if (dir == nullptr)
     {
@@ -201,7 +206,7 @@ void AddFilesFromDirectoryToTpaList(const char* directory, std::string& tpaList)
 
     // Walk the directory for each extension separately so that we first get files with .ni.dll extension,
     // then files with .dll extension, etc.
-    for (int extIndex = 0; extIndex < sizeof(tpaExtensions) / sizeof(tpaExtensions[0]); extIndex++)
+    for (int extIndex = 0; extIndex < (int)(sizeof(tpaExtensions) / sizeof(tpaExtensions[0])); extIndex++)
     {
         const char* ext = tpaExtensions[extIndex];
         int extLength = strlen(ext);
@@ -211,6 +216,7 @@ void AddFilesFromDirectoryToTpaList(const char* directory, std::string& tpaList)
         // For all entries in the directory
         while ((entry = readdir(dir)) != nullptr)
         {
+#ifndef __WIN32            
             // We are interested in files only
             switch (entry->d_type)
             {
@@ -220,6 +226,7 @@ void AddFilesFromDirectoryToTpaList(const char* directory, std::string& tpaList)
             // Handle symlinks and file systems that do not support d_type
             case DT_LNK:
             case DT_UNKNOWN:
+#endif                    
                 {
                     std::string fullFilename;
 
@@ -238,12 +245,13 @@ void AddFilesFromDirectoryToTpaList(const char* directory, std::string& tpaList)
                         continue;
                     }
                 }
+#ifndef __WIN32                    
                 break;
 
             default:
                 continue;
             }
-
+#endif
             std::string filename(entry->d_name);
 
             // Check if the extension matches the one we are looking for

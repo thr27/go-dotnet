@@ -1,7 +1,11 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <sstream>
-#include <dlfcn.h>
+#ifdef __WIN32
+  #include <dlfcn-win32\dlfcn.h>
+#else
+  #include <dlfcn.h>
+#endif
 #include <limits.h>
 #include <string>
 #include <cstring>
@@ -99,9 +103,15 @@ int initializeCoreCLR(const char* exePath,
         // Keep enough space for inserting the tpaList:
         propertyCount++;
 
+#ifdef __WIN32
+  char **keys; 
+  keys= (char**)malloc(propertyCount*sizeof(char*));
+  char **values; 
+  values= (char**)malloc(propertyCount*sizeof(char*));
+#else
         char *keys[propertyCount];
         char *values[propertyCount];
-
+#endif
         parseValues(mergedPropertyKeys, keys, propertyCount);
         parseValues(mergedPropertyValues, values, propertyCount);
 
@@ -141,10 +151,13 @@ int initializeCoreCLR(const char* exePath,
         } else {
           fprintf(stderr, "coreclr_initialize failed - status: 0x%08x\n", st);
         };
+#ifdef __WIN32
+  free(keys);
+  free(values);
+#endif
 
       }
     }
-
     return 0;
 
 }
@@ -157,7 +170,7 @@ int shutdownCoreCLR() {
     return -1;
   }
   return st;
-};
+}
 
 int executeManagedAssembly(const char *assembly) {
   printf("Executing: %s\n", assembly);
@@ -175,7 +188,7 @@ int executeManagedAssembly(const char *assembly) {
     return st;
   };
   return 0;
-};
+}
 
 int createDelegate(const char* entryPointAssemblyName,
             const char* entryPointTypeName,
@@ -201,4 +214,4 @@ void parseValues(const char* input, char** dest, int count) {
     std::strcpy(dest[i], v);
     i++;
   }
-};
+}
