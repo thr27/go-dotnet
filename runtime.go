@@ -100,6 +100,10 @@ func (r *Runtime) Init() (err error) {
 	var CLRCommonPaths = []string{
 		"/usr/local/share/dotnet/shared/Microsoft.NETCore.App/1.0.0",
 		"/usr/share/dotnet/shared/Microsoft.NETCore.App/1.0.0",
+		"C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319",
+		"C:\\Windows\\Microsoft.NET\\Framework64\\v3.5",
+		"C:\\Windows\\Microsoft.NET\\Framework64\\v3.0\\Windows Communication Foundation",
+		"C:\\Windows\\Microsoft.NET\\Framework64\\v2.0.50727",
 	}
 
 	// Test for common SDK paths, return err if they don't exist
