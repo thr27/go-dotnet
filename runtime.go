@@ -9,7 +9,7 @@ with mingw32-make
 /*
 #cgo CXXFLAGS: -std=c++11 -Wall -pedantic
 #cgo linux LDFLAGS: -ldl
-#cgo windows LDFLAGS: -L/lib -L/usr/local/lib  -ldl -lpsapi
+#cgo windows LDFLAGS:  -ldl -lpsapi
 #include <stdio.h>
 #include <stdlib.h>
 #include "binding.hpp"

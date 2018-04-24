@@ -11,7 +11,7 @@
 #include <assert.h>
 #include <dirent.h>
 #ifdef __WIN32
-  #include <dlfcn-win32\dlfcn.h>
+  #include <dlfcn.h>
   char *realpath(const char *, char*);
 #else
   #include <dlfcn.h>

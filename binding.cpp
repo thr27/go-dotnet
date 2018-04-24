@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <sstream>
 #ifdef __WIN32
-  #include <dlfcn-win32\dlfcn.h>
+  #include <dlfcn.h>
 #else
   #include <dlfcn.h>
 #endif
