@@ -108,6 +108,10 @@ I'm not sure about the status of [Roslyn](https://github.com/dotnet/roslyn) but 
 
 Coming soon!
 
+### WIN32 - Note
+
+You need dlfcn-win32 installed in your system (https://github.com/thr27/dlfcn-win32)
+
 ## Ideas
 
 * Run some benchmarks.
@@ -129,3 +133,4 @@ I'm open to PRs, Go/.NET swag, suggestions, etc.
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 
 [capture]: capture.png
+
