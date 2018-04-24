@@ -111,7 +111,11 @@ Coming soon!
 ### WIN32 - Note
 
 You need dlfcn-win32 installed in your system (https://github.com/thr27/dlfcn-win32)
-``` ./configure 
+``` 
+cd ... somewhere
+git cline https://github.com/thr27/dlfcn-win32
+cd dlfcn-win32
+./configure 
 mingw32-make install
 ```
 
